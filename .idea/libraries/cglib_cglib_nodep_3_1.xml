@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="cglib:cglib-nodep:3.1" type="repository">
+    <properties maven-id="cglib:cglib-nodep:3.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
