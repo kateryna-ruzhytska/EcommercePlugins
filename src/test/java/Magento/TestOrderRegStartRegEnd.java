@@ -12,6 +12,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 
 /**
@@ -36,19 +37,29 @@ public class TestOrderRegStartRegEnd {
                 .click();  //add item to the cart
         driver.findElement(By.xpath(".//*[@id='header']/div/div[2]/div/div/a/span[2]")).click(); //view cart options
         driver.findElement(By.cssSelector(".button.checkout-button")).click(); //checkout
-        WebElement waitElement3 = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#onepage-guest-register-button")));
+        WebElement waitElement1 = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#onepage-guest-register-button")));
         driver.findElement(By.cssSelector("#onepage-guest-register-button")).click(); //checkout as guest
         WebElement waitElement2 = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#checkout-step-billing")));
         Assert.assertTrue(driver.findElement(By.cssSelector("#checkout-step-billing")).isDisplayed());
 
-        //BillingInformationPage.fillBilling("test", "test", "triggmine01@gmail.com", "test 2", "test", "12345", "8005558789", driver);
+        BillingInformationPage.fillBilling("test", "test", "triggmine01@gmail.com", "test 2", "test", "12345", "8005558789", driver); //fill billing inf
 
         driver.findElement(By.xpath(".//*[@id='billing:region_id']")).click();
+
         Select select = new Select (driver.findElement(By.tagName("select")));
-        select.getAllSelectedOptions();
-        select.selectByIndex(2);
+        select.selectByIndex(3); //select State/Province
 
+        driver.findElement(By.xpath(".//*[@id='billing-buttons-container']/button")) .click(); //Continue button on Billing Inf page
+        WebElement waitElement3 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='shipping-method-buttons-container']/button")));
+        driver.findElement(By.xpath(".//*[@id='shipping-method-buttons-container']/button")) .click(); //Continue button on Shipping Method page
+        WebElement waitElement4 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='payment-buttons-container']/button")));
+        driver.findElement(By.xpath(".//*[@id='checkout-payment-method-load']/dt[1]/label")) .click(); //Check/Money order on Payment Inf page
+        driver.findElement(By.xpath(".//*[@id='payment-buttons-container']/button")) .click(); //Continue button on Payment Inf page
+        WebElement waitElement5 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='review-buttons-container']/button")));
+        driver.findElement(By.xpath(".//*[@id='review-buttons-container']/button")) .click(); //Place order
 
+        WebElement waitElement6 = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//*[@id='top']/body/div[1]/div/div[2]/div/div/h2")));
+        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='top']/body/div[1]/div/div[2]/div/div/h2")).isDisplayed());
 
 
 
