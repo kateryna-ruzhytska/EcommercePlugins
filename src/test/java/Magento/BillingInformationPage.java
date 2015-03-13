@@ -2,18 +2,17 @@ package Magento;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 /**
  * Created by kruzhitskaya on 02.03.15.
  */
 public class BillingInformationPage {
-    public static void fillBilling (String firstName, String lastName, String email,
+    public static void fillBilling (String firstName, String lastName, /*String email,*/
                                     String address, String city, String zipCode,
                                                String phone, WebDriver driver){
         typeFirstName(firstName, driver);
         typeLastName(lastName, driver);
-        typeEmail(email, driver);
+        //typeEmail(email, driver);
         typeAddress(address, driver);
         typeCity(city, driver);
         typeZipCode(zipCode, driver);

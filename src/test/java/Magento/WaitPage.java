@@ -11,13 +11,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class WaitPage {
     public static void waitElementLocated(String locator, WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, 2);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
 
         WebElement located = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
     }
 
     public static void waitElementClickable (String locator, WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, 2);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
 
         WebElement located = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
         WebElement visible = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
