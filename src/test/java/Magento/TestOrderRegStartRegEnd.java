@@ -28,16 +28,24 @@ public class TestOrderRegStartRegEnd {
 
     @Test
     public void testOrderRegStart() throws InterruptedException {
-        driver.findElement(By.xpath(".//*[@id='top']/body/div[1]/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[1]/div/div[2]/button"))
+
+        String addItemButtonXpath = ".//*[@id='top']/body/div[1]/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[1]/div/div[2]/button";
+        driver.findElement(By.xpath(addItemButtonXpath))
                 .click();  //add item to the cart
-        driver.findElement(By.xpath(".//*[@id='header']/div/div[2]/div/div/a/span[2]")).click(); //view cart options
-        driver.findElement(By.cssSelector(".button.checkout-button")).click(); //checkout
 
-        WaitPage.waitElementLocated(".//*[@id='onepage-guest-register-button']", driver);
-        driver.findElement(By.cssSelector("#onepage-guest-register-button")).click(); //checkout as guest
+        String cartLabelXpath = ".//*[@id='header']/div/div[2]/div/div/a/span[2]";
+        driver.findElement(By.xpath(cartLabelXpath)).click(); //view cart options
 
-        WaitPage.waitElementLocated(".//*[@id='checkout-step-billing']", driver);
-        Assert.assertTrue(driver.findElement(By.cssSelector("#checkout-step-billing")).isDisplayed());
+        String checkoutButtonCss = ".button.checkout-button";
+        driver.findElement(By.cssSelector(checkoutButtonCss)).click(); //checkout
+
+        String guestRegisterContinueButtonXpath = ".//*[@id='onepage-guest-register-button']";
+        WaitPage.waitElementLocated(guestRegisterContinueButtonXpath, driver);
+        driver.findElement(By.xpath(guestRegisterContinueButtonXpath)).click(); //checkout as guest
+
+        String billingFormXpath = ".//*[@id='checkout-step-billing']";
+        WaitPage.waitElementLocated(billingFormXpath, driver);
+        Assert.assertTrue(driver.findElement(By.xpath(billingFormXpath)).isDisplayed());
 
         BillingInformationPage.fillBilling("test", "test", "triggmine01@gmail.com", "test 2", "test", "12345", "8005558789", driver); //fill billing inf
 
@@ -59,16 +67,18 @@ public class TestOrderRegStartRegEnd {
         driver.findElement(By.xpath(shippingButtonContinueXpath)).sendKeys(Keys.ENTER); //Continue button on Shipping Method page
 
         String paymentButtonContinueXpath = ".//*[@id='payment-buttons-container']/button";
+        String checkoutPaymentMethodXpath = ".//*[@id='checkout-payment-method-load']/dt[1]/label";
         WaitPage.waitElementClickable(paymentButtonContinueXpath, driver);
-        driver.findElement(By.xpath(".//*[@id='checkout-payment-method-load']/dt[1]/label")).click(); //Check/Money order on Payment Inf page
+        driver.findElement(By.xpath(checkoutPaymentMethodXpath)).click(); //Check/Money order on Payment Inf page
         driver.findElement(By.xpath(paymentButtonContinueXpath)).sendKeys(Keys.ENTER); //Continue button on Payment Inf page
 
         String reviewButtonContinueXpath = ".//*[@id='review-buttons-container']/button";
         WaitPage.waitElementClickable(reviewButtonContinueXpath, driver);
         driver.findElement(By.xpath(reviewButtonContinueXpath)).sendKeys(Keys.ENTER); //Place order
 
-        WaitPage.waitElementLocated(".//*[@id='top']/body/div[1]/div/div[2]/div/div/h2", driver);
-        Assert.assertTrue(driver.findElement(By.xpath(".//*[@id='top']/body/div[1]/div/div[2]/div/div/h2")).isDisplayed());
+        String orderConfirmation = ".//*[@id='top']/body/div[1]/div/div[2]/div/div/h2";
+        WaitPage.waitElementLocated(orderConfirmation, driver);
+        Assert.assertTrue(driver.findElement(By.xpath(orderConfirmation)).isDisplayed());
 
     }
 
