@@ -6,7 +6,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 /**
  * Created by kruzhitskaya on 13.03.15.
  */
-public class GenerateData {
+public class GenerateDataPage {
     public String generateRandomString(int length) {
         return RandomStringUtils.randomAlphabetic(length);
     }

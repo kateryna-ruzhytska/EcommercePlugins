@@ -18,12 +18,12 @@ public class TestOrderRegStartRegEnd {
 
     private WebDriver driver;
     private String baseUrl = "http://triggmine-05.videal.net/";
-    private GenerateData genData;
+    private GenerateDataPage genData;
 
     @BeforeTest
     public void setUp() {
         driver = new FirefoxDriver();
-        genData = new GenerateData();
+        genData = new GenerateDataPage();
     }
 
     @Test(priority = 1)
