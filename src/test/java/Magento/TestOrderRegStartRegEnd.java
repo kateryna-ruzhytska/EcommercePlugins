@@ -27,7 +27,7 @@ public class TestOrderRegStartRegEnd {
     }
 
     @Test(priority = 1)
-    public void testOrderRegStart() throws InterruptedException {
+    public void testOrderRegStart() {
         driver.get(baseUrl + "/index.php/plat-ja-ot-olega/plat-ja-s-dlinnym-rukavom.html");
 
         By addItemButtonXpath = By.xpath(".//*[@id='top']/body/div[1]/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[1]/div/div[2]/button");
@@ -54,8 +54,6 @@ public class TestOrderRegStartRegEnd {
         final Select select = new Select (driver.findElement(By.xpath(stateProvinceXpath)));
         final int optionIndex = 3;
         WebElement optionThird = select.getOptions().get(optionIndex);
-//        String optionXpath = stateProvinceXpath + "/option[text()='American Samoa']";
-//        WaitPage.waitElementClickable(optionXpath, driver);
         optionThird.click();
 
         driver.findElement(By.xpath(".//*[@id='billing:email']")).clear();
@@ -101,7 +99,7 @@ public class TestOrderRegStartRegEnd {
 
         String guestRegisterContinueButtonXpath = ".//*[@id='onepage-guest-register-button']";
         WaitPage.waitElementLocated(guestRegisterContinueButtonXpath, driver);
-        driver.findElement(By.xpath(guestRegisterContinueButtonXpath)).click(); //checkout as guest
+        driver.findElement(By.xpath(guestRegisterContinueButtonXpath)).click(); //guest register button
 
         String billingFormXpath = ".//*[@id='checkout-step-billing']";
         WaitPage.waitElementLocated(billingFormXpath, driver);
