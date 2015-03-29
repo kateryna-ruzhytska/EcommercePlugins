@@ -52,7 +52,7 @@ public class TestRegistration {
         WaitPage.waitElementLocated(billingFormXpath, driver);
         Assert.assertTrue(driver.findElement(By.xpath(billingFormXpath)).isDisplayed());
 
-        BillingInformationPage.fillBilling("test", "test", /*"triggmine01@gmail.com",*/ "test 2", "test", "12345", "8005558789", driver); //fill billing inf
+        BillingInformationPage.fillBilling("test", "test", "test 2", "test", "12345", "8005558789", driver); //fill billing inf
 
         String stateProvinceXpath = ".//*[@id='billing:region_id']";
         driver.findElement(By.xpath(stateProvinceXpath)).click(); //select State/Province
