@@ -26,15 +26,6 @@ public class GenerateDataPage {
         return RandomStringUtils.random(length, allowedChars);
     }
 
-    public String generateEmail(int length) {
-        String allowedChars = "abcdefghijklmnopqrstuvwxyz" +   //alphabets
-                "1234567890";   //numbers
-        String email = "";
-        String temp = RandomStringUtils.random(length, allowedChars);
-        email = temp.substring(0, temp.length() - 9) + "@gmail.com";
-        return email;
-    }
-
     public String generateUrl(int length) {
         String allowedChars = "abcdefghijklmnopqrstuvwxyz" +   //alphabets
                 "1234567890" +   //numbers
@@ -44,4 +35,14 @@ public class GenerateDataPage {
         url = temp.substring(0, 3) + "." + temp.substring(4, temp.length() - 4) + "." + temp.substring(temp.length() - 3);
         return url;
     }
+
+    public String generateEmail(int length) {
+        String allowedChars = "abcdefghijklmnopqrstuvwxyz" +   //alphabets
+                "1234567890";   //numbers
+        String email = "";
+        String temp = RandomStringUtils.random(length, allowedChars);
+        email = temp.substring(0, temp.length() - 9) + "@gmail.com";
+        return email;
+    }
+
 }
