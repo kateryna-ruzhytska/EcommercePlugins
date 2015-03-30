@@ -31,7 +31,7 @@ public class TestLogInLogOutAbandonedCart {
 
         if (driver.findElement(By.xpath(cartItemsAmountXpath)).isDisplayed())//check if cart items >0
         {
-            PurchaseActionPage.purchaseLoginUser(driver);//perform a purchase
+            PurchasePage.purchaseLoginUser(driver);//perform a purchase
         }
             driver.get(baseUrl + "/index.php/plat-ja-ot-olega/plat-ja-s-dlinnym-rukavom.html");
 

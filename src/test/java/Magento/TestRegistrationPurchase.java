@@ -27,18 +27,18 @@ public class TestRegistrationPurchase {
 
         AddDeleteItemsPage.addItem(driver);//add item to the cart
 
-        PurchaseActionPage.registerAndCheckout(driver);//click Register and Checkout
+        PurchasePage.registerAndCheckout(driver);//click Register and Checkout
 
-        BillingInformationPage.fillBilling("test", "test", "test 2", "test",
+        BillingPage.fillBilling("test", "test", "test 2", "test",
                 "12345", "8005558789", driver); //fill main billing inf
 
-        BillingInformationPage.chooseStateProvince(driver);// choose State/Province
+        BillingPage.chooseStateProvince(driver);// choose State/Province
 
-        BillingInformationPage.generateNewEmail(driver);//generate random email
+        BillingPage.generateNewEmail(driver);//generate random email
 
-        BillingInformationPage.enterPassConfirmPass("0508101626",driver);//enter password and confirm it
+        BillingPage.enterPassConfirmPass("0508101626", driver);//enter password and confirm it
 
-        PurchaseActionPage.purchaseRegistrationGuest(driver);//perform a purchase
+        PurchasePage.purchaseRegistrationGuest(driver);//perform a purchase
 
     }
 

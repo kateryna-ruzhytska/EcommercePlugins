@@ -8,7 +8,7 @@ import org.testng.Assert;
 /**
  * Created by kruzhitskaya on 30.03.15.
  */
-public class PurchaseActionPage {
+public class PurchasePage {
 
     public static void purchaseLoginUser(WebDriver driver) {
 

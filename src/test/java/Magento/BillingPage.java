@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 /**
  * Created by kruzhitskaya on 02.03.15.
  */
-public class BillingInformationPage {
+public class BillingPage {
     public static void fillBilling (String firstName, String lastName,
                                     String address, String city, String zipCode,
                                                String phone, WebDriver driver){
