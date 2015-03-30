@@ -1,4 +1,4 @@
-package Magento;
+package Shared;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
