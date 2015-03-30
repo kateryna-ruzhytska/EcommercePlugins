@@ -1,4 +1,4 @@
-package Magento;
+package Shared;
 
 import org.apache.commons.lang3.RandomStringUtils;
 

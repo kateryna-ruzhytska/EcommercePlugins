@@ -8,7 +8,7 @@ import org.testng.Assert;
 /**
  * Created by kruzhitskaya on 30.03.15.
  */
-public class AddDeleteItemsPage {
+public class AddDeleteItemsMgnPage {
     public static void addItem(WebDriver driver) {
 
         By addItemButtonXpath = By.xpath(".//*[@id='top']/body/div[1]/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[1]/div/div[2]/button");

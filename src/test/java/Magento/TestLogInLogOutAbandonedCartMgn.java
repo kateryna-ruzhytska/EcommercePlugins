@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 /**
  * Created by kruzhitskaya on 27.03.15.
  */
-public class TestLogInLogOutAbandonedCart {
+public class TestLogInLogOutAbandonedCartMgn {
     private WebDriver driver;
     private String baseUrl = "http://triggmine-05.videal.net/";
 
@@ -25,20 +25,24 @@ public class TestLogInLogOutAbandonedCart {
     public void testLogInLogOutAbandonedCart (){
         driver.get(baseUrl);
 
-        LoginLogoutPage.logInAction("triggmine02@gmail.com", "0508101626", driver);//log in
+        LoginLogoutMgnPage.logInAction("triggmine02@gmail.com", "0508101626", driver);//log in
 
         String cartItemsAmountXpath = ".//*[@id='header']/div/div[2]/div/div/a/span[3]";
         WaitPage.waitElementLocated(cartItemsAmountXpath, driver);
 
+//TODO get new CartId for all carts that don't have NEW State
+
         if (driver.findElement(By.xpath(cartItemsAmountXpath)).isDisplayed())//check if cart items >0
         {
-            PurchasePage.purchaseLoginUser(driver);//perform a purchase
+            PurchaseMgnPage.purchaseLoginUser(driver);//perform a purchase
         }
             driver.get(baseUrl + "/index.php/plat-ja-ot-olega/plat-ja-s-dlinnym-rukavom.html");
 
-            AddDeleteItemsPage.addItem(driver);//add item to the cart
+            AddDeleteItemsMgnPage.addItem(driver);//add item to the cart
 
-            LoginLogoutPage.logOutAction(driver);//log out
+            LoginLogoutMgnPage.logOutAction(driver);//log out
+
+            AddDeleteItemsMgnPage.addItem(driver);//add item to the cart
 
     }
 

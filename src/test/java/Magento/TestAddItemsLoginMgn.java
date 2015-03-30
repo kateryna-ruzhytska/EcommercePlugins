@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 /**
  * Created by kruzhitskaya on 30.03.15.
  */
-public class TestAddItemsLogin {
+public class TestAddItemsLoginMgn {
     private WebDriver driver;
     private String baseURL = "http://triggmine-05.videal.net/";
 
@@ -23,9 +23,9 @@ public class TestAddItemsLogin {
     @Test
     public void testAddItemsLogin() {
 
-        AddDeleteItemsPage.addItem(driver);//add item to the cart
+        AddDeleteItemsMgnPage.addItem(driver);//add item to the cart
 
-        LoginLogoutPage.logInAction("triggmine01@gmail.com", "0508101626", driver);//log in
+        LoginLogoutMgnPage.logInAction("triggmine01@gmail.com", "0508101626", driver);//log in
 
     }
 

@@ -1,5 +1,6 @@
 package Magento;
 
+import Shared.GenerateDataPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
@@ -9,7 +10,7 @@ import org.testng.annotations.Test;
 /**
  * Created by kruzhitskaya on 27.03.15.
  */
-public class TestRegistrationPurchase {
+public class TestRegistrationPurchaseMgn {
     private WebDriver driver;
     private String baseUrl = "http://triggmine-05.videal.net/";
     private GenerateDataPage genData;
@@ -25,20 +26,20 @@ public class TestRegistrationPurchase {
 
         driver.get(baseUrl + "/index.php/plat-ja-ot-olega/plat-ja-s-dlinnym-rukavom.html");
 
-        AddDeleteItemsPage.addItem(driver);//add item to the cart
+        AddDeleteItemsMgnPage.addItem(driver);//add item to the cart
 
-        PurchasePage.registerAndCheckout(driver);//click Register and Checkout
+        PurchaseMgnPage.registerAndCheckout(driver);//click Register and Checkout
 
-        BillingPage.fillBilling("test", "test", "test 2", "test",
+        BillingMgnPage.fillBilling("test", "test", "test 2", "test",
                 "12345", "8005558789", driver); //fill main billing inf
 
-        BillingPage.chooseStateProvince(driver);// choose State/Province
+        BillingMgnPage.chooseStateProvince(driver);// choose State/Province
 
-        BillingPage.generateNewEmail(driver);//generate random email
+        BillingMgnPage.generateNewEmail(driver);//generate random email
 
-        BillingPage.enterPassConfirmPass("0508101626", driver);//enter password and confirm it
+        BillingMgnPage.enterPassConfirmPass("0508101626", driver);//enter password and confirm it
 
-        PurchasePage.purchaseRegistrationGuest(driver);//perform a purchase
+        PurchaseMgnPage.purchaseRegistrationGuest(driver);//perform a purchase
 
     }
 

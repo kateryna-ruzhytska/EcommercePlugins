@@ -1,5 +1,6 @@
 package Magento;
 
+import Shared.GenerateDataPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
@@ -9,7 +10,7 @@ import org.testng.annotations.Test;
 /**
  * Created by kruzhitskaya on 02.03.15.
  */
-public class TestOrderRegStartRegEnd {
+public class TestOrderRegStartRegEndMgn {
 
     private WebDriver driver;
     private String baseUrl = "http://triggmine-05.videal.net/";
@@ -25,18 +26,18 @@ public class TestOrderRegStartRegEnd {
     public void testOrderRegStart() {
         driver.get(baseUrl + "/index.php/plat-ja-ot-olega/plat-ja-s-dlinnym-rukavom.html");
 
-        AddDeleteItemsPage.addItem(driver);//add item to the cart
+        AddDeleteItemsMgnPage.addItem(driver);//add item to the cart
 
-        PurchasePage.guestCheckout(driver);//Checkout as guest
+        PurchaseMgnPage.guestCheckout(driver);//Checkout as guest
 
-        BillingPage.fillBilling("test", "test", "test 2", "test",
+        BillingMgnPage.fillBilling("test", "test", "test 2", "test",
                 "12345", "8005558789", driver); //fill main billing inf
 
-        BillingPage.chooseStateProvince(driver);// choose State/Province
+        BillingMgnPage.chooseStateProvince(driver);// choose State/Province
 
-        BillingPage.generateNewEmail(driver);//generate random email
+        BillingMgnPage.generateNewEmail(driver);//generate random email
 
-        PurchasePage.purchaseRegistrationGuest(driver);
+        PurchaseMgnPage.purchaseRegistrationGuest(driver);
     }
 
     @Test(priority = 2)
@@ -44,18 +45,18 @@ public class TestOrderRegStartRegEnd {
         driver.manage().deleteAllCookies();
         driver.get(baseUrl + "/index.php/plat-ja-ot-olega/plat-ja-s-dlinnym-rukavom.html");
 
-        AddDeleteItemsPage.addItem(driver);//add item to the cart
+        AddDeleteItemsMgnPage.addItem(driver);//add item to the cart
 
-        PurchasePage.guestCheckout(driver);//Checkout as guest
+        PurchaseMgnPage.guestCheckout(driver);//Checkout as guest
 
-        BillingPage.fillBilling("test", "test", "test 2", "test",
+        BillingMgnPage.fillBilling("test", "test", "test 2", "test",
                 "12345", "8005558789", driver); //fill main billing inf
 
-        BillingPage.chooseStateProvince(driver);// choose State/Province
+        BillingMgnPage.chooseStateProvince(driver);// choose State/Province
 
-        BillingPage.enterEmail("triggmine01@gmail.com", driver);
+        BillingMgnPage.enterEmail("triggmine01@gmail.com", driver);
 
-        PurchasePage.purchaseRegistrationGuest(driver);
+        PurchaseMgnPage.purchaseRegistrationGuest(driver);
 
     }
 

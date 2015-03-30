@@ -8,7 +8,7 @@ import org.testng.Assert;
 /**
  * Created by kruzhitskaya on 31.03.15.
  */
-public class AddDeleteItemsPage {
+public class AddDeleteItemsWpPage {
 
     public static void addItem(WebDriver driver) {
 

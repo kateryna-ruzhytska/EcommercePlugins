@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 /**
  * Created by kruzhitskaya on 25.02.15.
  */
-public class TestAddDeleteItems {
+public class TestAddDeleteItemsMgn {
     private WebDriver driver;
     private String baseUrl = "http://triggmine-05.videal.net/";
 
@@ -24,18 +24,21 @@ public class TestAddDeleteItems {
     @Test(priority = 1)
     public void testAddItems() {
 
-        AddDeleteItemsPage.addItem(driver);
+        AddDeleteItemsMgnPage.addItem(driver);//add item to the cart
+
+        driver.get(baseUrl + "/index.php/plat-ja-ot-olega/plat-ja-s-dlinnym-rukavom.html");
+        AddDeleteItemsMgnPage.addItem(driver);//update cart
     }
 
     @Test(priority = 2)
     public void testDeleteItems() {
 
-        AddDeleteItemsPage.deleteItem(driver);
+        AddDeleteItemsMgnPage.deleteItem(driver);//clear cart
     }
 
     @AfterTest
     public void tearDown() {
-        driver.quit();
+        //driver.quit();
     }
 
 }

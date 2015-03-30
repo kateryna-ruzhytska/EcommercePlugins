@@ -8,7 +8,7 @@ import org.testng.Assert;
 /**
  * Created by kruzhitskaya on 30.03.15.
  */
-public class LoginLogoutPage {
+public class LoginLogoutMgnPage {
 
     public static void logInAction(String email, String pass,WebDriver driver) {
 

@@ -1,5 +1,6 @@
 package Magento;
 
+import Shared.GenerateDataPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 /**
  * Created by kruzhitskaya on 02.03.15.
  */
-public class BillingPage {
+public class BillingMgnPage {
     public static void fillBilling (String firstName, String lastName,
                                     String address, String city, String zipCode,
                                                String phone, WebDriver driver){
