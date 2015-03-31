@@ -1,10 +1,7 @@
 package WP;
 
-import Shared.WaitPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -29,14 +26,7 @@ public class TestAddItemsLoginWp {
 
         AddDeleteItemsWpPage.addItem(driver);//add item
 
-        LoginLogoutWpPage.LoginAction("Kate", "0508101626", driver);
-
-        driver.get(baseUrl);
-        String homePage = ".//*[@id='masthead']";
-        WaitPage.waitElementLocated(homePage, driver);//check user is on the Home page
-
-        String welcome = ".//*[@id='wp-admin-bar-my-account']/a";
-        Assert.assertEquals("How are you, Kate?", driver.findElement(By.xpath(welcome)).getText());//check user is logged in
+        LoginLogoutWpPage.loginAction("Kate", "0508101626", driver);//log in
 
     }
 

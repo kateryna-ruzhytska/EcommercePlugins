@@ -30,6 +30,14 @@ public class AddDeleteItemsWpPage {
         WaitPage.waitElementLocated(emptyCartXpath, driver);
         Assert.assertEquals("Your shopping cart is empty\n" +
                 "Visit the shop", driver.findElement(By.xpath(emptyCartXpath)).getText());// check cart items = 0
+    }
 
+    public static void clickLogo(WebDriver driver) {
+
+        String logoXpath = ".//*[@id='masthead']/div/div/h1/a";
+        driver.findElement(By.xpath(logoXpath)).click();//click on logo
+
+        String addToCartButtonXpath = ".//*[@id='product_10_submit_button']";
+        WaitPage.waitElementLocated(addToCartButtonXpath, driver);
     }
 }
