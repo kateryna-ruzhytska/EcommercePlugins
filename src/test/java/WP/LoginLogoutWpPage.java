@@ -34,6 +34,20 @@ public class LoginLogoutWpPage {
 
     }
 
+    public static void loginActionAfterRegistration(String email, String pass, WebDriver driver) {
+
+        setEmailPass(email, pass, driver);
+        clickLoginButton(driver);//click Log in button
+        String baseUrl = "http://triggmine-02.videal.net/";
+        driver.get(baseUrl);//go to the Home page
+        String homePage = ".//*[@id='masthead']";
+        WaitPage.waitElementLocated(homePage, driver);//check user is on the Home page
+
+        String welcomeMessageXpath = ".//*[@id='wp-admin-bar-my-account']/a";
+        Assert.assertTrue(driver.findElement(By.xpath(welcomeMessageXpath)).isDisplayed());//check user is logged in
+
+    }
+
     public static void logOutAction(WebDriver driver) {
 
         WebElement welcome = driver.findElement(By.xpath(".//*[@id='wp-admin-bar-my-account']/a"));
