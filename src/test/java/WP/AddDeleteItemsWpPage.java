@@ -35,6 +35,7 @@ public class AddDeleteItemsWpPage {
     public static void clickLogo(WebDriver driver) {
 
         String logoXpath = ".//*[@id='masthead']/div/div/h1/a";
+        WaitPage.waitElementLocated(logoXpath, driver);
         driver.findElement(By.xpath(logoXpath)).click();//click on logo
 
         String addToCartButtonXpath = ".//*[@id='product_10_submit_button']";

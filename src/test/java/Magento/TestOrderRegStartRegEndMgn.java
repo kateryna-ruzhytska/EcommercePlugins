@@ -1,6 +1,5 @@
 package Magento;
 
-import Shared.GenerateDataPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
@@ -14,12 +13,10 @@ public class TestOrderRegStartRegEndMgn {
 
     private WebDriver driver;
     private String baseUrl = "http://triggmine-05.videal.net/";
-    private GenerateDataPage genData;
 
     @BeforeTest
     public void setUp() {
         driver = new FirefoxDriver();
-        genData = new GenerateDataPage();
     }
 
     @Test(priority = 1)

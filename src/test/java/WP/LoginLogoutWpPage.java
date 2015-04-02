@@ -22,8 +22,7 @@ public class LoginLogoutWpPage {
 
         setEmailPass(email, pass, driver);
 
-        String logInButtonXpath = ".//*[@id='wp-submit']";
-        driver.findElement(By.xpath(logInButtonXpath)).click();//click Log in button
+        clickLoginButton(driver);//click Log in button
 
         String baseUrl = "http://triggmine-02.videal.net/";
         driver.get(baseUrl);//go to the Home page
@@ -33,17 +32,6 @@ public class LoginLogoutWpPage {
         String welcomeMessageXpath = ".//*[@id='wp-admin-bar-my-account']/a";
         Assert.assertTrue(driver.findElement(By.xpath(welcomeMessageXpath)).isDisplayed());//check user is logged in
 
-    }
-
-    public static void setEmailPass(String email, String pass, WebDriver driver) {
-
-        String emailXpath = ".//*[@id='user_login']";
-        driver.findElement(By.xpath(emailXpath)).clear();
-        driver.findElement(By.xpath(emailXpath)).sendKeys(email);//set email
-
-        String passXpath = ".//*[@id='user_pass']";
-        driver.findElement(By.xpath(passXpath)).clear();
-        driver.findElement(By.xpath(passXpath)).sendKeys(pass);//set password
     }
 
     public static void logOutAction(WebDriver driver) {
@@ -59,5 +47,22 @@ public class LoginLogoutWpPage {
         String backToShopXpath = ".//*[@id='backtoblog']/a";
         driver.findElement(By.xpath(backToShopXpath)).click(); //go back to the Home page
 
+    }
+
+    public static void setEmailPass(String email, String pass, WebDriver driver) {
+
+        String emailXpath = ".//*[@id='user_login']";
+        driver.findElement(By.xpath(emailXpath)).clear();
+        driver.findElement(By.xpath(emailXpath)).sendKeys(email);//set email
+
+        String passXpath = ".//*[@id='user_pass']";
+        driver.findElement(By.xpath(passXpath)).clear();
+        driver.findElement(By.xpath(passXpath)).sendKeys(pass);//set password
+    }
+
+    public static void clickLoginButton (WebDriver driver) {
+
+        String registerButtonXpath = ".//*[@id='wp-submit']";
+        driver.findElement(By.xpath(registerButtonXpath)).click();
     }
 }
