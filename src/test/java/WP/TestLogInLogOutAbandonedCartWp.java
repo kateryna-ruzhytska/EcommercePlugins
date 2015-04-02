@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 /**
  * Created by kruzhitskaya on 31.03.15.
  */
-public class TestLogInLogOutAbandonedCartWP {
+public class TestLogInLogOutAbandonedCartWp {
 
     private WebDriver driver;
     private String baseUrl = "http://triggmine-02.videal.net/";
@@ -52,6 +52,6 @@ public class TestLogInLogOutAbandonedCartWP {
 
     @AfterTest
     public void tearDown() {
-        //driver.quit();
+        driver.quit();
     }
 }
