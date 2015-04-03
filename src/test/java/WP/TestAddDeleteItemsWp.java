@@ -1,7 +1,7 @@
 package WP;
 
+import Shared.BrowserMobProxyPage;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -13,9 +13,20 @@ public class TestAddDeleteItemsWp {
     private WebDriver driver;
     private String baseUrl = "http://triggmine-02.videal.net/";
 
-    @BeforeTest
+   @BeforeTest
+   public void proxyServer() throws Exception {
+       BrowserMobProxyPage.startProxy();
+       driver = BrowserMobProxyPage.desiredCap();
+//       ProxyServer bmp = new ProxyServer(8071);
+//       DesiredCapabilities caps = new DesiredCapabilities();
+//       caps.setCapability(CapabilityType.PROXY, bmp.seleniumProxy());
+//
+//       driver = new FirefoxDriver(caps);
+   }
+
+    @BeforeTest(dependsOnMethods = "proxyServer")
     public void setUp() {
-        driver = new FirefoxDriver();
+        BrowserMobProxyPage.newHar();
         driver.get(baseUrl);
         driver.manage().deleteAllCookies();
 
@@ -28,17 +39,16 @@ public class TestAddDeleteItemsWp {
 
         AddDeleteItemsWpPage.addItem(driver);//update cart
 
-    }
-
-    @Test(priority = 2)
-    public void testDeleteItem() {
-
         AddDeleteItemsWpPage.deleteItem(driver);//clear cart
 
+        BrowserMobProxyPage.gettingHar();
     }
 
+
+
     @AfterTest
-    public void tearDown() {
+    public void tearDown() throws Exception {
         driver.quit();
+        BrowserMobProxyPage.stopProxy();
     }
 }
