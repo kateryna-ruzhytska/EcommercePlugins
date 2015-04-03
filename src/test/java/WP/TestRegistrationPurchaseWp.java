@@ -38,28 +38,26 @@ public class TestRegistrationPurchaseWp {
 
     @Test(priority = 1)
     public void checkAddItem() {
-        //add item
-        AddDeleteItemsWpPage.addItem(driver);
+        AddDeleteItemsWpPage.addItem(driver);//add item
     }
 
 
     @Test(priority = 2)
     public void performRegistration() {
-        //register
-        RegistrationWpPage.registration(driver);
+        RegistrationWpPage.registration(driver);//register
     }
 
     @Test(priority = 3, timeOut = 120000)
     public void checkMailContent() {
 
-        ArrayList<String> messageHtml = emailReader.readGmail(login, password);
-        regLogin = Parser.getCredentials(messageHtml.get(0), "Username: ");
-        regPassword = Parser.getCredentials(messageHtml.get(0), "Password: ");
+        ArrayList<String> messageHtml = emailReader.readGmail(login, password);//check mail content
+        regLogin = Parser.getCredentials(messageHtml.get(0), "Username: ");//get username
+        regPassword = Parser.getCredentials(messageHtml.get(0), "Password: ");//get password
     }
 
     @Test(priority = 4)
     public void checkLogin(){
-        LoginLogoutWpPage.loginActionAfterRegistration(regLogin, regPassword, driver);
+        LoginLogoutWpPage.loginActionAfterRegistration(regLogin, regPassword, driver);//log in with new credentials
     }
 
     @AfterTest
