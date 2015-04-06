@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Plugins.iml" filepath="$PROJECT_DIR$/Plugins.iml" />
+      <module fileurl="file://$PROJECT_DIR$/triggmineplugins.iml" filepath="$PROJECT_DIR$/triggmineplugins.iml" />
     </modules>
   </component>
 </project>

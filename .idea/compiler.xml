@@ -23,6 +23,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="Plugins" />
+        <module name="triggmineplugins" />
       </profile>
     </annotationProcessing>
   </component>
