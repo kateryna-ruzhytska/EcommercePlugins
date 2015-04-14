@@ -138,5 +138,6 @@
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:jetty-repacked:7.6.1" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.8" level="project" />
     <orderEntry type="library" name="Maven: com.jcraft:jsch:0.1.51" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1" level="project" />
   </component>
 </module>

@@ -3,11 +3,13 @@ package Shared;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
-import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.Iterator;
 
 
 /**
@@ -17,8 +19,7 @@ public class LogParserPage {
     private static ChannelSftp sftpChannel;
     private static Session session;
 
-    public static void setConnection(int port, String fileName) throws IOException {
-
+    public static void setConnection(int port, String file) throws IOException {
         String user = "administrator";
         String password = "pass@word1";
         String host = "10.0.1.17";
@@ -37,25 +38,48 @@ public class LogParserPage {
             sftpChannel.connect();
             System.out.println("SFTP Channel created.");
 
-            sftpChannel.rm(fileName);
+            sftpChannel.rm(file);
             Thread.sleep(1000);
-
         }
-        catch(Exception e){System.err.print(e);}
+        catch(Exception ex){System.err.print(ex);}
 
     }
-    public static void readFile(String fileName) throws IOException {
+
+   /* public static ArrayList<String> readFile(String fileName) throws IOException {
+        ArrayList<String> log = new ArrayList<String>();
         try {
             InputStream out = null;
             out = sftpChannel.get(fileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(out));
             String line;
-            while ((line = br.readLine()) != null)
+            while ((line = br.readLine()) != null) {
                 System.out.println(line);
+                log.add(line);
+            }
             br.close();
-
-            session.disconnect();
         }
         catch(Exception e){System.err.print(e);}
+        return log;
+    }*/
+    public static void readJson(String file, String key){
+        JSONParser parser = new JSONParser();
+        try {
+            System.out.println("Reading JSON file");
+            FileReader fileReader = new FileReader(file);
+            JSONObject jsonObject = (JSONObject) parser.parse(fileReader);
+            JSONArray requestResponse = (JSONArray) jsonObject.get(key);
+
+            Iterator iterator = requestResponse.iterator();
+            while (iterator.hasNext()) {
+                System.out.println(" " + iterator.next());
+            }
+        } catch(Exception ex){System.err.print(ex);}
+
     }
+
+
+
+
+
+
 }

@@ -15,7 +15,11 @@ import java.io.IOException;
 public class TestAddDeleteItemsWp {
     private WebDriver driver;
     private String baseUrl = "http://triggmine-02.videal.net/";
-    private String logPathWp = "/var/www/wordpress/wordpress/wp-content/plugins/triggmine/core/logs/log.txt";
+    private String filePathWp = "/var/www/wordpress/wordpress/wp-content/plugins/triggmine/core/logs/log.txt";
+    //private LogParserPage log = new LogParserPage();
+    private String buyerId;
+    private String cartId;
+    private String createReplaceCartItem;
 
     @BeforeTest
     public void setUp() {
@@ -27,24 +31,29 @@ public class TestAddDeleteItemsWp {
 
     @Test(priority = 1)
     public void testAddItem() throws IOException {
-        LogParserPage.setConnection(1011, logPathWp);
+        LogParserPage.setConnection(1011, filePathWp);
         AddDeleteItemsWpPage.addItem(driver);//add item
-        LogParserPage.readFile(logPathWp);
+        LogParserPage.readJson(filePathWp, "CartId");
+
+
+        //Assert.assertNotNull(log);
+
+
     }
 
     @Test(priority = 2)
     public void testUpdateItem() throws IOException, InterruptedException {
-        LogParserPage.setConnection(1011, logPathWp);
+        LogParserPage.setConnection(1011, filePathWp);
         AddDeleteItemsWpPage.addItem(driver);//update cart
         Thread.sleep(5000);
-        LogParserPage.readFile(logPathWp);
+        //LogParserPage.readFile(logPathWp);
     }
 
     @Test(priority = 3)
     public void testDeleteItem() throws IOException {
-        LogParserPage.setConnection(1011, logPathWp);
+        LogParserPage.setConnection(1011, filePathWp);
         AddDeleteItemsWpPage.deleteItem(driver);//clear cart
-        LogParserPage.readFile(logPathWp);
+        //LogParserPage.readFile(logPathWp);
     }
 
     @AfterTest
