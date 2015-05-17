@@ -3,13 +3,16 @@ package Shared;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import org.json.simple.JSONArray;
+import com.jcraft.jsch.SftpException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Iterator;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 
 /**
@@ -19,13 +22,13 @@ public class LogParserPage {
     private static ChannelSftp sftpChannel;
     private static Session session;
 
-    public static void setConnection(int port, String file) throws IOException {
-        String user = "administrator";
+    public static void setConnection(String file) throws IOException {
+        String user = "root";
         String password = "pass@word1";
-        String host = "10.0.1.17";
+        String host = "triggmine.videal.local";
+        int port = 22;
 
-        try
-        {
+        try {
             JSch jsch = new JSch();
             session = jsch.getSession(user, host, port);
             session.setPassword(password);
@@ -38,14 +41,20 @@ public class LogParserPage {
             sftpChannel.connect();
             System.out.println("SFTP Channel created.");
 
-            sftpChannel.rm(file);
-            Thread.sleep(1000);
+            //sftpChannel.rm(file);
+            //Thread.sleep(1000);
+        } catch (Exception ex) {
+            System.err.print(ex);
         }
-        catch(Exception ex){System.err.print(ex);}
 
     }
 
-   /* public static ArrayList<String> readFile(String fileName) throws IOException {
+    public static void removeFile(String file) throws SftpException, InterruptedException {
+        sftpChannel.rm(file);
+        Thread.sleep(3000);
+    }
+
+    public static ArrayList<String> readFile(String fileName) throws IOException {
         ArrayList<String> log = new ArrayList<String>();
         try {
             InputStream out = null;
@@ -57,29 +66,27 @@ public class LogParserPage {
                 log.add(line);
             }
             br.close();
+        } catch (Exception ex) {
+            System.err.print(ex);
         }
-        catch(Exception e){System.err.print(e);}
         return log;
-    }*/
-    public static void readJson(String file, String key){
-        JSONParser parser = new JSONParser();
-        try {
-            System.out.println("Reading JSON file");
-            FileReader fileReader = new FileReader(file);
-            JSONObject jsonObject = (JSONObject) parser.parse(fileReader);
-            JSONArray requestResponse = (JSONArray) jsonObject.get(key);
-
-            Iterator iterator = requestResponse.iterator();
-            while (iterator.hasNext()) {
-                System.out.println(" " + iterator.next());
-            }
-        } catch(Exception ex){System.err.print(ex);}
-
     }
 
+    public static JSONObject getJson(String file) throws ParseException {
+        JSONParser parser = new JSONParser();
+        Object object = parser.parse(file);
+        JSONObject jsonObject = (JSONObject) object;
 
 
 
+//        JSONArray jsonArray = (JSONArray) jsonObject.get();
+
+        /*Iterator iterator = jsonArray.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(" " + iterator.next());
+            }*/
+        return jsonObject;
+    }
 
 
 }
