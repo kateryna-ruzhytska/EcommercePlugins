@@ -22,10 +22,9 @@ public class TestAddDeleteItemsWp {
     private WebDriver driver;
     private String baseUrl = "http://wordpress.triggmine.videal.net/";
     private String filePathWp = "/home/qa/web/wordpress.triggmine.videal.net/public_html/wp-content/plugins/triggmine/core/logs/log.txt";
-    //private LogParserPage log = new LogParserPage();
     private String buyerId;
     private String cartId;
-    private String createReplaceCartItem;
+    private String token;
 
     @BeforeTest
     public void setUp() {
@@ -49,13 +48,14 @@ public class TestAddDeleteItemsWp {
         JSONObject jsonObject = LogParserPage.getJson(json.get(0));
 
         HashMap jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");
-
+        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
-        buyerId = (String) data.get("BuyerId");
-        cartId = (String) data.get("CartId");
+        buyerId = (String) data.get("BuyerId");//get BuyerId in response
+        cartId = (String) data.get("CartId");//get CartId in response
 
-        //jsonObjectHashMap = (HashMap) jsonObject.get("Request");
+        jsonObjectHashMap = (HashMap) jsonObject.get("Request");
+        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
+        token = (String) (jsonObjectHashMap.get("Token"));//check Token is the same for each action
 
     }
 
@@ -69,12 +69,15 @@ public class TestAddDeleteItemsWp {
         JSONObject jsonObject = LogParserPage.getJson(json.get(0));
 
         HashMap jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");
+        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
-        Assert.assertEquals(buyerId, data.get("BuyerId"));
-        Assert.assertEquals(cartId, data.get("CartId"));
+        Assert.assertEquals(data.get("ReplaceOnly").toString(), "1");//check item is updated
+        Assert.assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
+        Assert.assertEquals(cartId, data.get("CartId"));//check "CartId" in the same
+        Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
+        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
     }
 
     @Test(priority = 3)
@@ -86,12 +89,14 @@ public class TestAddDeleteItemsWp {
         JSONObject jsonObject = LogParserPage.getJson(json.get(0));
 
         HashMap jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");
+        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
-        Assert.assertEquals(buyerId, data.get("BuyerId"));
-        Assert.assertEquals(cartId, data.get("CartId"));
+        Assert.assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
+        Assert.assertEquals(cartId, data.get("CartId"));//check "CartId" in the same
+        Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
+        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCart");//check proper method is sent
 
     }
 
