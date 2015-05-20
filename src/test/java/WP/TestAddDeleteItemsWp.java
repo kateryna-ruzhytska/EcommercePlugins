@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by kruzhitskaya on 31.03.15.
@@ -35,43 +36,62 @@ public class TestAddDeleteItemsWp {
     }
 
     @BeforeTest(dependsOnMethods = "setUp")
-    public void initBuyer() throws IOException, ParseException, InterruptedException, SftpException {
+    public void initBuyer() throws IOException {
         LogParserPage.setConnection(filePathWp);
-        LogParserPage.removeFile(filePathWp);
-
-        AddDeleteItemsWpPage.addItem(driver);//add item
-        driver.navigate().refresh();
-
-        ArrayList<String> json = LogParserPage.readFile(filePathWp);
-        JSONObject jsonObject = LogParserPage.getJson(json.get(0));
-        Assert.assertEquals(jsonObject.get("ErrorCode").toString(), "0");
-
-        buyerId = (String) jsonObject.get("buyerId");
     }
 
     @Test(priority = 1)
-    public void testUpdateItem() throws IOException, InterruptedException, ParseException {
+    public void testAddItem() throws InterruptedException, SftpException, IOException, ParseException {
+        LogParserPage.removeFile(filePathWp);
+        AddDeleteItemsWpPage.addItem(driver);//add item
+
+        ArrayList<String> json = LogParserPage.readFile(filePathWp);
+        JSONObject jsonObject = LogParserPage.getJson(json.get(0));
+
+        HashMap jsonObjectHashMap = (HashMap) jsonObject.get("Response");
+        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");
+
+        JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
+        buyerId = (String) data.get("BuyerId");
+        cartId = (String) data.get("CartId");
+
+        //jsonObjectHashMap = (HashMap) jsonObject.get("Request");
+
+    }
+
+    @Test(priority = 2)
+    public void testUpdateItem() throws IOException, InterruptedException, ParseException, SftpException {
+        LogParserPage.removeFile(filePathWp);
         AddDeleteItemsWpPage.addItem(driver);//update cart
         Thread.sleep(5000);
 
         ArrayList<String> json = LogParserPage.readFile(filePathWp);
         JSONObject jsonObject = LogParserPage.getJson(json.get(0));
 
-        Assert.assertEquals(jsonObject.get("ErrorCode").toString(), "0");
+        HashMap jsonObjectHashMap = (HashMap) jsonObject.get("Response");
+        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");
 
-        Assert.assertEquals(buyerId, jsonObject.get("buyerId"));
+        jsonObjectHashMap = (HashMap) jsonObject.get("Request");
+        JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
+        Assert.assertEquals(buyerId, data.get("BuyerId"));
+        Assert.assertEquals(cartId, data.get("CartId"));
     }
 
-    @Test(priority = 2)
-    public void testDeleteItem() throws IOException, ParseException {
+    @Test(priority = 3)
+    public void testDeleteItem() throws IOException, ParseException, InterruptedException, SftpException {
+        LogParserPage.removeFile(filePathWp);
         AddDeleteItemsWpPage.deleteItem(driver);//clear cart
 
         ArrayList<String> json = LogParserPage.readFile(filePathWp);
         JSONObject jsonObject = LogParserPage.getJson(json.get(0));
 
-        Assert.assertEquals(jsonObject.get("ErrorCode").toString(), "0");
+        HashMap jsonObjectHashMap = (HashMap) jsonObject.get("Response");
+        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");
 
-        Assert.assertEquals(buyerId, jsonObject.get("buyerId"));
+        jsonObjectHashMap = (HashMap) jsonObject.get("Request");
+        JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
+        Assert.assertEquals(buyerId, data.get("BuyerId"));
+        Assert.assertEquals(cartId, data.get("CartId"));
 
     }
 

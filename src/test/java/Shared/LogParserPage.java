@@ -41,8 +41,6 @@ public class LogParserPage {
             sftpChannel.connect();
             System.out.println("SFTP Channel created.");
 
-            //sftpChannel.rm(file);
-            //Thread.sleep(1000);
         } catch (Exception ex) {
             System.err.print(ex);
         }
@@ -77,14 +75,6 @@ public class LogParserPage {
         Object object = parser.parse(file);
         JSONObject jsonObject = (JSONObject) object;
 
-
-
-//        JSONArray jsonArray = (JSONArray) jsonObject.get();
-
-        /*Iterator iterator = jsonArray.iterator();
-        while (iterator.hasNext()) {
-            System.out.println(" " + iterator.next());
-            }*/
         return jsonObject;
     }
 
