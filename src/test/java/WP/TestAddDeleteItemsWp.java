@@ -25,29 +25,36 @@ public class TestAddDeleteItemsWp {
     private String buyerId;
     private String cartId;
     private String token;
+    JSONObject jsonObject;
+    HashMap jsonObjectHashMap = null;
 
     @BeforeTest
     public void setUp() {
         driver = new FirefoxDriver();
         driver.get(baseUrl);
         driver.manage().deleteAllCookies();
-
     }
 
     @BeforeTest(dependsOnMethods = "setUp")
-    public void initBuyer() throws IOException {
+    public void setConnection () throws IOException {
         LogParserPage.setConnection(filePathWp);
     }
 
     @Test(priority = 1)
     public void testAddItem() throws InterruptedException, SftpException, IOException, ParseException {
-        LogParserPage.removeFile(filePathWp);
+        LogParserPage.removeFile(filePathWp);//remove log.txt
+
         AddDeleteItemsWpPage.addItem(driver);//add item
 
         ArrayList<String> json = LogParserPage.readFile(filePathWp);
-        JSONObject jsonObject = LogParserPage.getJson(json.get(0));
+        for (int i=0; i < json.size(); i++){
+            jsonObject = LogParserPage.getJson(json.get(i));
+            jsonObjectHashMap = (HashMap) jsonObject.get("Request");
+            if(jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceCart"))
+            {break;}
+        }
 
-        HashMap jsonObjectHashMap = (HashMap) jsonObject.get("Response");
+        jsonObjectHashMap = (HashMap) jsonObject.get("Response");
         Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
         buyerId = (String) data.get("BuyerId");//get BuyerId in response
@@ -61,15 +68,19 @@ public class TestAddDeleteItemsWp {
 
     @Test(priority = 2)
     public void testUpdateItem() throws IOException, InterruptedException, ParseException, SftpException {
-        LogParserPage.removeFile(filePathWp);
+        LogParserPage.removeFile(filePathWp);//remove log.txt
+
         AddDeleteItemsWpPage.addItem(driver);//update cart
         Thread.sleep(5000);
 
         ArrayList<String> json = LogParserPage.readFile(filePathWp);
-        JSONObject jsonObject = LogParserPage.getJson(json.get(0));
 
-        HashMap jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+        for (int i=0; i < json.size(); i++){
+            jsonObject = LogParserPage.getJson(json.get(i));
+            jsonObjectHashMap = (HashMap) jsonObject.get("Request");
+            if(jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceCartItem"))
+            {break;}
+        }
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
@@ -78,18 +89,25 @@ public class TestAddDeleteItemsWp {
         Assert.assertEquals(cartId, data.get("CartId"));//check "CartId" in the same
         Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
         Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
+
+        jsonObjectHashMap = (HashMap) jsonObject.get("Response");
+        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
     }
 
     @Test(priority = 3)
     public void testDeleteItem() throws IOException, ParseException, InterruptedException, SftpException {
-        LogParserPage.removeFile(filePathWp);
+        LogParserPage.removeFile(filePathWp);//remove log.txt
+
         AddDeleteItemsWpPage.deleteItem(driver);//clear cart
 
         ArrayList<String> json = LogParserPage.readFile(filePathWp);
-        JSONObject jsonObject = LogParserPage.getJson(json.get(0));
 
-        HashMap jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+        for (int i=0; i < json.size(); i++){
+            jsonObject = LogParserPage.getJson(json.get(i));
+            jsonObjectHashMap = (HashMap) jsonObject.get("Request");
+            if(jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceCart"))
+            {break;}
+        }
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
@@ -98,6 +116,8 @@ public class TestAddDeleteItemsWp {
         Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
         Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCart");//check proper method is sent
 
+        jsonObjectHashMap = (HashMap) jsonObject.get("Response");
+        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
     }
 
     @AfterTest
