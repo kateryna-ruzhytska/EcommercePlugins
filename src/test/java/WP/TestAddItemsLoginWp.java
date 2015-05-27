@@ -44,7 +44,6 @@ public class TestAddItemsLoginWp {
     @Test(priority = 1)
     public void testAddItemsLogin() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
-
         AddDeleteItemsWpPage.addItem(driver);//add item
 
         ArrayList<String> json= LogParserPage.readFile(filePathWp);
@@ -70,12 +69,10 @@ public class TestAddItemsLoginWp {
     @Test(priority = 2)
     public void logIn() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
-
         LoginLogoutWpPage.loginAction("Kate58", "0508101626", driver);//log in
 
         ArrayList<String> json= LogParserPage.readFile(filePathWp);
-
-//update cart full
+//CreateReplaceCart
         for (int i=0; i < json.size(); i++){
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
@@ -93,7 +90,7 @@ public class TestAddItemsLoginWp {
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
         Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
 
-//getBuyerByEmail
+//GetBuyerId
         for (int i=0; i < json.size(); i++){
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
@@ -111,7 +108,7 @@ public class TestAddItemsLoginWp {
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
         Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
 
-//updateBuyer
+//CreateReplaceBuyerInfo
         for (int i=0; i < json.size(); i++){
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");

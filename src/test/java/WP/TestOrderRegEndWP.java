@@ -45,7 +45,6 @@ public class TestOrderRegEndWP {
     @Test(priority = 1)
     public void testAddItem() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
-
         AddDeleteItemsWpPage.addItem(driver);//add items
 
 //CreateReplaceCartItem
@@ -135,7 +134,6 @@ public class TestOrderRegEndWP {
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
         Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
-
 
 //perform a purchase
         LogParserPage.removeFile(filePathWp);//remove log.txt

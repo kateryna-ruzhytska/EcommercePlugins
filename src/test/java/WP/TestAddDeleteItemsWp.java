@@ -43,9 +43,9 @@ public class TestAddDeleteItemsWp {
     @Test(priority = 1)
     public void testAddItem() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
-
         AddDeleteItemsWpPage.addItem(driver);//add item
 
+//CreateReplaceCart
         ArrayList<String> json = LogParserPage.readFile(filePathWp);
         for (int i=0; i < json.size(); i++){
             jsonObject = LogParserPage.getJson(json.get(i));
@@ -69,12 +69,11 @@ public class TestAddDeleteItemsWp {
     @Test(priority = 2)
     public void testUpdateItem() throws IOException, InterruptedException, ParseException, SftpException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
-
         AddDeleteItemsWpPage.addItem(driver);//update cart
         Thread.sleep(5000);
 
         ArrayList<String> json = LogParserPage.readFile(filePathWp);
-
+//CreateReplaceCartItem
         for (int i=0; i < json.size(); i++){
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
@@ -97,11 +96,10 @@ public class TestAddDeleteItemsWp {
     @Test(priority = 3)
     public void testDeleteItem() throws IOException, ParseException, InterruptedException, SftpException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
-
         AddDeleteItemsWpPage.deleteItem(driver);//clear cart
 
         ArrayList<String> json = LogParserPage.readFile(filePathWp);
-
+//CreateReplaceCart
         for (int i=0; i < json.size(); i++){
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");

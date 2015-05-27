@@ -48,7 +48,6 @@ public class TestLogInLogOutAbandonedCartWp {
     @Test(priority = 1)
     public void testLogIn() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
-
         LoginLogoutWpPage.loginAction("Kate59", "0508101626", driver);//log in
 
         ArrayList<String> json = LogParserPage.readFile(filePathWp);
@@ -117,7 +116,6 @@ public class TestLogInLogOutAbandonedCartWp {
 
     @Test(priority = 2)
     public void testPurchase() throws InterruptedException, SftpException, IOException, ParseException {
-
         String shoppingCartCss = ".shoppingcart";
         //WaitPage.waitElementLocated(cartItemsAmountXpath, driver);
         if (driver.findElement(By.cssSelector(shoppingCartCss)).isEnabled())  //check if cart items >0
@@ -152,7 +150,6 @@ public class TestLogInLogOutAbandonedCartWp {
     @Test(priority = 3)
     public void testAddItem() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
-
         AddDeleteItemsWpPage.addItem(driver);//add item
 
 //CreateReplaceCartItem
@@ -180,10 +177,7 @@ public class TestLogInLogOutAbandonedCartWp {
     @Test(priority = 3)
     public void testLogOutAbandonedCart() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
-
-
         LoginLogoutWpPage.logOutAction(driver);//log out
-
         AddDeleteItemsWpPage.addItem(driver);//add item
 
 //CreateReplaceCartItem
