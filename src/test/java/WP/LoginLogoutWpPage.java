@@ -24,7 +24,7 @@ public class LoginLogoutWpPage {
 
         clickLoginButton(driver);//click Log in button
 
-        String baseUrl = "http://triggmine-02.videal.net/";
+        String baseUrl = "http://wordpress.triggmine.videal.net/";
         driver.get(baseUrl);//go to the Home page
         String homePage = ".//*[@id='masthead']";
         WaitPage.waitElementLocated(homePage, driver);//check user is on the Home page
@@ -38,7 +38,7 @@ public class LoginLogoutWpPage {
 
         setEmailPass(email, pass, driver);
         clickLoginButton(driver);//click Log in button
-        String baseUrl = "http://triggmine-02.videal.net/";
+        String baseUrl = "http://wordpress.triggmine.videal.net/";
         driver.get(baseUrl);//go to the Home page
         String homePage = ".//*[@id='masthead']";
         WaitPage.waitElementLocated(homePage, driver);//check user is on the Home page
