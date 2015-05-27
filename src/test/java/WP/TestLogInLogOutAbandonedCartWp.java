@@ -1,7 +1,6 @@
 package WP;
 
 import Shared.LogParserPage;
-import Shared.WaitPage;
 import com.jcraft.jsch.SftpException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -17,7 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
 
 /**
  * Created by kruzhitskaya on 31.03.15.
@@ -39,6 +39,7 @@ public class TestLogInLogOutAbandonedCartWp {
         driver.get(baseUrl);
 
     }
+
     @BeforeTest(dependsOnMethods = "setUp")
     public void setConnection() throws IOException {
         LogParserPage.setConnection(filePathWp);
@@ -50,13 +51,14 @@ public class TestLogInLogOutAbandonedCartWp {
 
         LoginLogoutWpPage.loginAction("Kate59", "0508101626", driver);//log in
 
-        ArrayList<String> json= LogParserPage.readFile(filePathWp);
-//getBuyerByEmail
-        for (int i=0; i < json.size(); i++){
+        ArrayList<String> json = LogParserPage.readFile(filePathWp);
+//GetBuyerId
+        for (int i = 0; i < json.size(); i++) {
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-            if(jsonObjectHashMap.get("Method").toString().contentEquals("GetBuyerId"))
-            {break;}
+            if (jsonObjectHashMap.get("Method").toString().contentEquals("GetBuyerId")) {
+                break;
+            }
         }
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
@@ -70,12 +72,13 @@ public class TestLogInLogOutAbandonedCartWp {
         buyerId = (String) data.get("BuyerId");//get BuyerId
         assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
 
-//updateBuyer
-        for (int i=0; i < json.size(); i++){
+//CreateReplaceBuyerInfo
+        for (int i = 0; i < json.size(); i++) {
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-            if(jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceBuyerInfo"))
-            {break;}
+            if (jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceBuyerInfo")) {
+                break;
+            }
         }
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
@@ -89,43 +92,47 @@ public class TestLogInLogOutAbandonedCartWp {
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
         assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
 
-//update cart full
-        {for (int i=0; i < json.size(); i++){
-            jsonObject = LogParserPage.getJson(json.get(i));
+//CreateReplaceCart
+        {
+            for (int i = 0; i < json.size(); i++) {
+                jsonObject = LogParserPage.getJson(json.get(i));
+                jsonObjectHashMap = (HashMap) jsonObject.get("Request");
+                if (jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceCart")) {
+                    break;
+                }
+            }
+
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-            if(jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceCart"))
-            {break;}
-        }
+            data = (JSONObject) jsonObjectHashMap.get("Data");
+            Assert.assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId"
+            Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
+            Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCart");//check proper method is sent
 
-        jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-        data = (JSONObject) jsonObjectHashMap.get("Data");
-        Assert.assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId"
-        Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
-        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCart");//check proper method is sent
-
-        jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        data = (JSONObject) jsonObjectHashMap.get("Data");
-        cartId = (String) data.get("CartId");//get "CartId"
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+            jsonObjectHashMap = (HashMap) jsonObject.get("Response");
+            data = (JSONObject) jsonObjectHashMap.get("Data");
+            cartId = (String) data.get("CartId");//get "CartId"
+            Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
         }
     }
 
     @Test(priority = 2)
     public void testPurchase() throws InterruptedException, SftpException, IOException, ParseException {
 
-         String shoppingCartCss = ".shoppingcart";
+        String shoppingCartCss = ".shoppingcart";
         //WaitPage.waitElementLocated(cartItemsAmountXpath, driver);
         if (driver.findElement(By.cssSelector(shoppingCartCss)).isEnabled())  //check if cart items >0
         {
             LogParserPage.removeFile(filePathWp);//remove log.txt
 
             PurchaseWpPage.purchaseLoginUser(driver);//perform a purchase
-            ArrayList<String> json= LogParserPage.readFile(filePathWp);
-            for (int i=0; i < json.size(); i++){
+            ArrayList<String> json = LogParserPage.readFile(filePathWp);
+//PurchaseCart
+            for (int i = 0; i < json.size(); i++) {
                 jsonObject = LogParserPage.getJson(json.get(i));
                 jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-                if(jsonObjectHashMap.get("Method").toString().contentEquals("PurchaseCart"))
-                {break;}
+                if (jsonObjectHashMap.get("Method").toString().contentEquals("PurchaseCart")) {
+                    break;
+                }
             }
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
             JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
@@ -148,12 +155,14 @@ public class TestLogInLogOutAbandonedCartWp {
 
         AddDeleteItemsWpPage.addItem(driver);//add item
 
-        ArrayList<String> json= LogParserPage.readFile(filePathWp);
-        for (int i=0; i < json.size(); i++){
+//CreateReplaceCartItem
+        ArrayList<String> json = LogParserPage.readFile(filePathWp);
+        for (int i = 0; i < json.size(); i++) {
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-            if(jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceCartItem"))
-            {break;}
+            if (jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceCartItem")) {
+                break;
+            }
         }
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
@@ -177,12 +186,14 @@ public class TestLogInLogOutAbandonedCartWp {
 
         AddDeleteItemsWpPage.addItem(driver);//add item
 
-        ArrayList<String> json= LogParserPage.readFile(filePathWp);
-        for (int i=0; i < json.size(); i++){
+//CreateReplaceCartItem
+        ArrayList<String> json = LogParserPage.readFile(filePathWp);
+        for (int i = 0; i < json.size(); i++) {
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-            if(jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceCartItem"))
-            {break;}
+            if (jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceCartItem")) {
+                break;
+            }
         }
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
