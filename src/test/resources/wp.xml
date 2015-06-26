@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="WP" parallel="false">
+    <test name="EditCart">
+        <classes>
+            <class name="wp.TestAddDeleteItemsWp"/>
+        </classes>
+    </test>
+    <test name="AddItem">
+        <classes>
+            <class name="wp.TestAddItemsLoginWp"/>
+        </classes>
+    </test>
+    <test name="Login/Logout">
+        <classes>
+            <class name="wp.TestLogInLogOutAbandonedCartWp"/>
+        </classes>
+    </test>
+    <test name="RegEnd">
+        <classes>
+            <class name="wp.TestOrderRegEndWP"/>
+        </classes>
+    </test>
+    <test name="RegStart">
+        <classes>
+            <class name="wp.TestOrderRegStartWp"/>
+        </classes>
+    </test>
+    <test name="Registration">
+        <classes>
+            <class name="wp.TestRegistrationPurchaseWp"/>
+        </classes>
+    </test>
+</suite>

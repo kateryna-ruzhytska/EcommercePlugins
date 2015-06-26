@@ -26,5 +26,8 @@
         <module name="triggmineplugins" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="triggmineplugins" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>

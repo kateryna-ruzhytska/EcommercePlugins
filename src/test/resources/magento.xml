@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Magento" parallel="false">
+    <test name="EditCart">
+        <classes>
+            <class name="magento.TestAddDeleteItemsMgn"/>
+        </classes>
+    </test>
+    <test name="AddItems">
+        <classes>
+            <class name="magento.TestAddItemsLoginMgn"/>
+        </classes>
+    </test>
+    <test name="Login/Logout">
+        <classes>
+            <class name="magento.TestLogInLogOutAbandonedCartMgn"/>
+        </classes>
+    </test>
+    <test name="RegStartRegEnd">
+        <classes>
+            <class name="magento.TestOrderRegStartRegEndMgn"/>
+        </classes>
+    </test>
+    <test name="Purchase">
+        <classes>
+            <class name="magento.TestRegistrationPurchaseMgn"/>
+        </classes>
+    </test>
+</suite>
