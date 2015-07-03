@@ -1,13 +1,11 @@
 package shared;
 
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.SftpException;
+import com.jcraft.jsch.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,9 +46,20 @@ public class LogParserPage {
     }
 
     public static void removeFile(String file) throws SftpException, InterruptedException {
-        sftpChannel.rm(file);
-        Thread.sleep(3000);
-    }
+        SftpATTRS attrs = null;
+        Boolean fileExist = true;
+        try {attrs = sftpChannel.lstat(file);
+        } catch (Exception ex) {
+            fileExist = false;
+        }
+        if (fileExist = false){
+            System.out.print("File doesn't exist");}
+         else {
+            sftpChannel.rm(file);
+            Thread.sleep(3000);
+        }
+
+}
 
     public static ArrayList<String> readFile(String fileName) throws IOException {
         ArrayList<String> log = new ArrayList<String>();
