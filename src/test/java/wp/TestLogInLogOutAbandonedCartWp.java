@@ -11,6 +11,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import shared.WaitPage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -83,10 +84,10 @@ public class TestLogInLogOutAbandonedCartWp {
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         data = (JSONObject) jsonObjectHashMap.get("Data");
         assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
-        assertEquals(data.get("BuyerEmail").toString(), "triggminefortest+58@gmail.com");//check buyer email
+        assertEquals(data.get("BuyerEmail").toString(), "triggminefortest+59@gmail.com");//check buyer email
         assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
         assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceBuyerInfo");//check proper method is sent
-        assertEquals(data.get("BuyerRegEnd").toString(), "2015-05-19 13:05:12");//check the end of registration
+        assertEquals(data.get("BuyerRegEnd").toString(), "2015-05-20 09:44:46");//check the end of registration
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
         assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
@@ -116,12 +117,11 @@ public class TestLogInLogOutAbandonedCartWp {
 
     @Test(priority = 2)
     public void testPurchase() throws InterruptedException, SftpException, IOException, ParseException {
-        String shoppingCartCss = ".shoppingcart";
-        //WaitPage.waitElementLocated(cartItemsAmountXpath, driver);
-        if (driver.findElement(By.cssSelector(shoppingCartCss)).isEnabled())  //check if cart items >0
+        String shoppingCartXpath = ".//*[@id='quantity']";
+        WaitPage.waitElementLocated(shoppingCartXpath, driver);
+        if (driver.findElement(By.xpath(shoppingCartXpath)).isEnabled())  //check if cart items >0
         {
             LogParserPage.removeFile(filePathWp);//remove log.txt
-
             PurchaseWpPage.purchaseLoginUser(driver);//perform a purchase
             ArrayList<String> json = LogParserPage.readFile(filePathWp);
 //PurchaseCart
@@ -140,7 +140,6 @@ public class TestLogInLogOutAbandonedCartWp {
             assertEquals(jsonObjectHashMap.get("Method"), "PurchaseCart");//check proper method is sent
 
             jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-            data = (JSONObject) jsonObjectHashMap.get("Data");
             assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
         }
         AddDeleteItemsWpPage.clickLogo(driver);//go to the Home page
@@ -174,7 +173,7 @@ public class TestLogInLogOutAbandonedCartWp {
         assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
     }
 
-    @Test(priority = 3)
+    @Test(priority = 4)
     public void testLogOutAbandonedCart() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
         LoginLogoutWpPage.logOutAction(driver);//log out
@@ -198,7 +197,7 @@ public class TestLogInLogOutAbandonedCartWp {
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
-        token = (String) jsonObjectHashMap.get("Token");//check Token is the same for each action
+        assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
 
         String cartItemsAmountXpath = ".//*[@id='sliding_cart']/div/table/tfoot/tr[1]/td[1]";
         assertEquals("1 item", driver.findElement(By.xpath(cartItemsAmountXpath)).getText());//check cart item amount = 1

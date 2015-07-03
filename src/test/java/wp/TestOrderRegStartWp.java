@@ -72,9 +72,9 @@ public class TestOrderRegStartWp {
     @Test(priority = 2)
     public void testRegStart() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
+        PurchaseWpPage.clickCheckoutLabel(driver);//click Checkout
 
 //fill out register form
-        PurchaseWpPage.clickCheckoutLabel(driver);//click Checkout
         BillingWpPage.setRandomEmail(driver);//set random email
         BillingWpPage.setBillingInf("Kate", "Test", "Test", "Test", "Test", "Test", driver);//set billing inf
         BillingWpPage.selectCountry(driver);//select Country
@@ -132,12 +132,14 @@ public class TestOrderRegStartWp {
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
         Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+    }
 
-//perform a purchase
+    @Test(priority = 3)
+    public void testPurchase() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
         PurchaseWpPage.clickPurchaseButton(driver);//click Purchase button
 
-        json = LogParserPage.readFile(filePathWp);//read json
+        ArrayList<String> json = LogParserPage.readFile(filePathWp);//read json
 
 //GetBuyerId
         for (int i = 0; i < json.size(); i++) {
@@ -148,7 +150,7 @@ public class TestOrderRegStartWp {
             }
         }
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-        data = (JSONObject) jsonObjectHashMap.get("Data");
+        JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
         assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId"
         assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
         assertEquals(jsonObjectHashMap.get("Method"), "GetBuyerId");//check proper method is sent

@@ -1,5 +1,6 @@
 package wp;
 
+import org.testng.annotations.AfterTest;
 import shared.LogParserPage;
 import com.jcraft.jsch.SftpException;
 import org.json.simple.JSONObject;
@@ -71,9 +72,9 @@ public class TestOrderRegEndWP {
     @Test(priority = 2)
     public void testRegEnd() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
+        PurchaseWpPage.clickCheckoutLabel(driver);//click Checkout
 
 //fill out register form
-        PurchaseWpPage.clickCheckoutLabel(driver);//click Checkout
         BillingWpPage.setEmail("triggmine01@gmail.com", driver);//set email
         BillingWpPage.setBillingInf("Kate", "Test", "Test", "Test", "Test", "Test", driver);//set billing inf
         BillingWpPage.selectCountry(driver);//select Country
@@ -84,8 +85,8 @@ public class TestOrderRegEndWP {
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
             JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
-            if ( (jsonObjectHashMap.get("Method").toString().contentEquals("GetBuyerId"))
-            && (data.get("BuyerEmail").toString().contentEquals("triggmine01@gmail.com")) ) {
+            if ((jsonObjectHashMap.get("Method").toString().contentEquals("GetBuyerId"))
+                    && (data.get("BuyerEmail").toString().contentEquals("triggmine01@gmail.com"))) {
                 break;
             }
         }
@@ -102,8 +103,8 @@ public class TestOrderRegEndWP {
         for (int i = 0; i < json.size(); i++) {
             jsonObject = LogParserPage.getJson(json.get(i));
             jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-            if ( (jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceBuyerInfo"))
-                    && (data.get("BuyerEmail").toString().contentEquals("triggmine01@gmail.com")) ) {
+            if ((jsonObjectHashMap.get("Method").toString().contentEquals("CreateReplaceBuyerInfo"))
+                    && (data.get("BuyerEmail").toString().contentEquals("triggmine01@gmail.com"))) {
                 break;
             }
         }
@@ -134,12 +135,14 @@ public class TestOrderRegEndWP {
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
         Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+    }
 
-//perform a purchase
+    @Test(priority = 3)
+    public void testPurchase() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
         PurchaseWpPage.clickPurchaseButton(driver);//click Purchase button
 
-        json = LogParserPage.readFile(filePathWp);//read json
+        ArrayList <String> json = LogParserPage.readFile(filePathWp);//read json
 
 //GetBuyerId
         for (int i = 0; i < json.size(); i++) {
@@ -150,7 +153,7 @@ public class TestOrderRegEndWP {
             }
         }
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-        data = (JSONObject) jsonObjectHashMap.get("Data");
+        JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
         assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId"
         assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
         assertEquals(jsonObjectHashMap.get("Method"), "GetBuyerId");//check proper method is sent
@@ -214,6 +217,11 @@ public class TestOrderRegEndWP {
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
         assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
 
+    }
+
+    @AfterTest(alwaysRun = true)
+    public void tearDown() {
+        driver.quit();
     }
 
 }

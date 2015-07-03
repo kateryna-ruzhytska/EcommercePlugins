@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static org.testng.Assert.*;
+
 /**
  * Created by kruzhitskaya on 31.03.15.
  */
@@ -55,13 +57,13 @@ public class TestAddItemsLoginWp {
         }
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+        assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
         buyerId = (String) data.get("BuyerId");//get BuyerId in response
         cartId = (String) data.get("CartId");//get CartId in response
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
+        assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
         token = (String) jsonObjectHashMap.get("Token");//check Token is the same for each action
 
     }
@@ -82,13 +84,13 @@ public class TestAddItemsLoginWp {
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
-        Assert.assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
-        Assert.assertEquals(cartId, data.get("CartId"));//check "CartId" in the same
-        Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
-        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCart");//check proper method is sent
+        assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
+        assertEquals(cartId, data.get("CartId"));//check "CartId" in the same
+        assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
+        assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCart");//check proper method is sent
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+        assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
 
 //GetBuyerId
         for (int i=0; i < json.size(); i++){
@@ -100,13 +102,13 @@ public class TestAddItemsLoginWp {
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         data = (JSONObject) jsonObjectHashMap.get("Data");
-        Assert.assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
-        Assert.assertEquals(data.get("BuyerEmail").toString(), "triggminefortest+58@gmail.com");//check buyer email
-        Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
-        Assert.assertEquals(jsonObjectHashMap.get("Method"), "GetBuyerId");//check proper method is sent
+        assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
+        assertEquals(data.get("BuyerEmail").toString(), "triggminefortest+58@gmail.com");//check buyer email
+        assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
+        assertEquals(jsonObjectHashMap.get("Method"), "GetBuyerId");//check proper method is sent
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+        assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
 
 //CreateReplaceBuyerInfo
         for (int i=0; i < json.size(); i++){
@@ -118,14 +120,14 @@ public class TestAddItemsLoginWp {
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         data = (JSONObject) jsonObjectHashMap.get("Data");
-        Assert.assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
-        Assert.assertEquals(data.get("BuyerEmail").toString(), "triggminefortest+58@gmail.com");//check buyer email
-        Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
-        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceBuyerInfo");//check proper method is sent
-        Assert.assertEquals(data.get("BuyerRegEnd").toString(), "2015-05-19 13:05:12");//check the end of registration
+        assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
+        assertEquals(data.get("BuyerEmail").toString(), "triggminefortest+58@gmail.com");//check buyer email
+        assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
+        assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceBuyerInfo");//check proper method is sent
+        assertEquals(data.get("BuyerRegEnd").toString(), "2015-05-19 13:05:12");//check the end of registration
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+        assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
     }
 
     @AfterTest

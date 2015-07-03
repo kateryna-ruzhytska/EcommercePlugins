@@ -1,8 +1,8 @@
 package wp;
 
+import org.testng.Assert;
 import shared.LogParserPage;
 import com.jcraft.jsch.SftpException;
-import junit.framework.Assert;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +14,8 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static org.testng.Assert.*;
 
 /**
  * Created by kruzhitskaya on 31.03.15.
@@ -55,13 +57,13 @@ public class TestAddDeleteItemsWp {
         }
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+        assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
         buyerId = (String) data.get("BuyerId");//get BuyerId in response
         cartId = (String) data.get("CartId");//get CartId in response
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
-        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
+        assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
         token = (String) (jsonObjectHashMap.get("Token"));//check Token is the same for each action
 
     }
@@ -83,14 +85,14 @@ public class TestAddDeleteItemsWp {
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
-        Assert.assertEquals(data.get("ReplaceOnly").toString(), "1");//check item is updated
-        Assert.assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
-        Assert.assertEquals(cartId, data.get("CartId"));//check "CartId" in the same
-        Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
-        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
+        assertEquals(data.get("ReplaceOnly").toString(), "1");//check item is updated
+        assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
+        assertEquals(cartId, data.get("CartId"));//check "CartId" in the same
+        assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
+        assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCartItem");//check proper method is sent
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+        assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
     }
 
     @Test(priority = 3)
@@ -109,13 +111,13 @@ public class TestAddDeleteItemsWp {
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Request");
         JSONObject data = (JSONObject) jsonObjectHashMap.get("Data");
-        Assert.assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
-        Assert.assertEquals(cartId, data.get("CartId"));//check "CartId" in the same
-        Assert.assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
-        Assert.assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCart");//check proper method is sent
+        assertEquals(buyerId, data.get("BuyerId"));//check "BuyerId" in the same
+        assertEquals(cartId, data.get("CartId"));//check "CartId" in the same
+        assertEquals(token, jsonObjectHashMap.get("Token"));//check Token is the same for each action
+        assertEquals(jsonObjectHashMap.get("Method"), "CreateReplaceCart");//check proper method is sent
 
         jsonObjectHashMap = (HashMap) jsonObject.get("Response");
-        Assert.assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
+        assertEquals(jsonObjectHashMap.get("ErrorCode").toString(), "0");//check "ErrorCode" is "0"
     }
 
     @AfterTest

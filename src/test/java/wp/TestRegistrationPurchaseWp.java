@@ -58,7 +58,7 @@ public class TestRegistrationPurchaseWp {
     }
 
     @Test(priority = 1)
-    public void checkAddItem() throws IOException, ParseException, InterruptedException, SftpException {
+    public void testAddItem() throws IOException, ParseException, InterruptedException, SftpException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
         AddDeleteItemsWpPage.addItem(driver);//add items
 
@@ -84,7 +84,7 @@ public class TestRegistrationPurchaseWp {
 
 
     @Test(priority = 2)
-    public void performRegistration() throws InterruptedException, SftpException, IOException, ParseException {
+    public void testRegistration() throws InterruptedException, SftpException, IOException, ParseException {
         LogParserPage.removeFile(filePathWp);//remove log.txt
         RegistrationWpPage.registration(driver);//register
 
