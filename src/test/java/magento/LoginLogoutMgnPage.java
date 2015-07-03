@@ -10,7 +10,7 @@ import org.testng.Assert;
  */
 public class LoginLogoutMgnPage {
 
-    public static void logInAction(String email, String pass,WebDriver driver) {
+    public static void logInAction(String email, String pass,WebDriver driver) throws InterruptedException {
 
         By accountButtonXpath = By.xpath(".//*[@id='header']/div/div[2]/div/a/span[2]");
         driver.findElement(accountButtonXpath).click();// click Account button
@@ -30,12 +30,13 @@ public class LoginLogoutMgnPage {
 
     }
 
-    public static void emailPass(String email, String pass,WebDriver driver) {
+    public static void emailPass(String email, String pass,WebDriver driver) throws InterruptedException {
         String emailXpath = ".//*[@id='email']";
         WaitPage.waitElementLocated(emailXpath, driver);
         driver.findElement(By.xpath(emailXpath)).clear();
         driver.findElement(By.xpath(emailXpath)).sendKeys(email);//set email
 
+        Thread.sleep(2000);
         String passwordXpath = ".//*[@id='pass']";
         driver.findElement(By.xpath(passwordXpath)).clear();
         driver.findElement(By.xpath(passwordXpath)).sendKeys(pass);//set password

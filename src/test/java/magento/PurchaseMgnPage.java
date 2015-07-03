@@ -19,12 +19,11 @@ public class PurchaseMgnPage {
         continueButtonPaymentInf(driver);
         placeOrder(driver);
     }
-    public static void purchaseRegistrationGuest(WebDriver driver) {
+    public static void purchaseRegistrationGuestContinueButtons(WebDriver driver) {
 
         continueButtonBilling(driver);
         continueButtonShippingMethod(driver);
         continueButtonPaymentInf(driver);
-        placeOrder(driver);
     }
 
     public static void registerAndCheckout(WebDriver driver) {
@@ -37,7 +36,7 @@ public class PurchaseMgnPage {
 
         String guestRegisterContinueButtonXpath = ".//*[@id='onepage-guest-register-button']";
         WaitPage.waitElementLocated(guestRegisterContinueButtonXpath, driver);
-        driver.findElement(By.xpath(guestRegisterContinueButtonXpath)).click(); //guest register button
+        driver.findElement(By.xpath(guestRegisterContinueButtonXpath)).click(); //Continue button
 
         String billingFormXpath = ".//*[@id='checkout-step-billing']";
         WaitPage.waitElementLocated(billingFormXpath, driver);

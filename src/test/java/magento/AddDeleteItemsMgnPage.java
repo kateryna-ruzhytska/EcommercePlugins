@@ -9,10 +9,12 @@ import org.testng.Assert;
  * Created by kruzhitskaya on 30.03.15.
  */
 public class AddDeleteItemsMgnPage {
+
     public static void addItem(WebDriver driver) {
 
-        By addItemButtonXpath = By.xpath(".//*[@id='top']/body/div[1]/div/div[2]/div/div[2]/div[1]/div[3]/ul/li[1]/div/div[2]/button");
-        driver.findElement(addItemButtonXpath).click();//add item to the cart
+        String addItemButtonXpath = ".//*[@id='top']/body/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/ul/li/div/div[2]/button";
+        WaitPage.waitElementClickable(addItemButtonXpath, driver);
+        driver.findElement(By.xpath(addItemButtonXpath)).click();//add item to the cart
 
         String cartItemsAmountXpath = ".//*[@id='header']/div/div[2]/div/div/a/span[3]";
         WaitPage.waitElementLocated(cartItemsAmountXpath, driver);
